@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM
+        "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head}"></head>
+
+
+<body class="mark">
+<h1 class="text-decoration-none text-center m-4">
+  Pharmacy
+</h1>
+
+<!--send a flash message-->
+<div th:if="${message}" class="alert alert-success text-center">
+  [[${message}]]
+</div>
+
+<div class="text-center align-items-center m-auto">
+  <table border="1" class="table table-hover table-responsive rounded">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="med : ${meds}">
+      <td th:text="${med.id}"></td>
+      <td th:text="${med.name}"></td>
+      <td>
+        <div class="border border-3 p-3 rounded">
+          <div th:text="${med.body}">
+          </div>
+        </div>
+      </td>
+      <td th:number="${med.created_at}"></td>
+      <td>
+<!--        <a th:href="@{/addForm}" class="h4 btn btn-primary btn-sm w-25">Add Task</a>-->
+        <a class="h4 btn btn-warning mr-3 w-25" th:href="@{'/addForm/' + ${med.id}}">Edit</a>
+        <a th:onclick="return confirm('Are you sure you want to delete?')" class="h4 btn btn-danger w-25"
+           th:href="@{'/deleteMed/' + ${med.id}}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="m-2">
+  <a th:href="@{/addForm}" class="btn btn-primary btn-sm mb-3">Add Task</a>
+</div>
+</body>
+</html>
